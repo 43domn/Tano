@@ -1,60 +1,88 @@
+// Ініціалізація Telegram Web App
 const tg = window.Telegram.WebApp;
 tg.expand();
+tg.setHeaderColor('#ffffff');
 
-// Регистрируем плагины
+// Реєстрація плагінів GSAP
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const panels = gsap.utils.toArray('.panel');
+const navButtons = document.querySelectorAll('.nav-btn');
 
-// Основная логика закрепления блоков (Pinning)
+// Логіка закріплення екранів (Pinning)
 panels.forEach((panel, i) => {
-    ScrollTrigger.create({
-        trigger: panel,
-        start: "top top",
-        pin: true,
-        pinSpacing: false,
-        snap: 1,
-        onUpdate: (self) => {
-            // Если блок активен, подсвечиваем кнопку в меню
-            if (self.isActive) {
-                updateNav(panel.id);
+    // Не робимо pinning для футера, щоб він просто виїжджав в кінці
+    if(panel.id !== 'contacts') {
+        ScrollTrigger.create({
+            trigger: panel,
+            start: "top top",
+            pin: true,
+            pinSpacing: false,
+            snap: 1, // Доводка до екрану
+            onUpdate: (self) => {
+                if (self.isActive) {
+                    updateNav(panel.id);
+                }
+            },
+            onEnter: () => {
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            },
+            onEnterBack: () => {
+                if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             }
-        },
-        onEnter: () => {
-            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-        }
-    });
+        });
+    }
+
+    // Анімація появи елементів всередині кожного екрану
+    const elementsToAnimate = panel.querySelectorAll('.fade-in');
+    if (elementsToAnimate.length > 0) {
+        gsap.from(elementsToAnimate, {
+            scrollTrigger: {
+                trigger: panel,
+                start: "top center",
+                toggleActions: "play none none reverse"
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out"
+        });
+    }
 });
 
-// Функция обновления активной кнопки
+// Функція оновлення активної кнопки в меню
 function updateNav(id) {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-target') === `#${id}`);
+    navButtons.forEach(btn => {
+        if (btn.getAttribute('data-target') === `#${id}`) {
+            btn.classList.add('active');
+            
+            // Зміна кольору тексту кнопок меню залежно від фону секції
+            const navMenu = document.querySelector('.nav-menu');
+            if (id === 'hero' || id === 'cooperation') {
+                navButtons.forEach(b => { if(!b.classList.contains('active')) b.style.color = '#000'; });
+                navMenu.style.background = 'rgba(0, 0, 0, 0.05)';
+            } else {
+                navButtons.forEach(b => { if(!b.classList.contains('active')) b.style.color = '#fff'; });
+                navMenu.style.background = 'rgba(255, 255, 255, 0.15)';
+            }
+        } else {
+            btn.classList.remove('active');
+        }
     });
 }
 
-// Логика клика по кнопкам навигации
-document.querySelectorAll('.nav-btn').forEach(btn => {
+// Клік по навігації
+navButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const target = btn.getAttribute('data-target');
         
-        // Вибрация при клике
         if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 
-        // Плавный скролл к секции
         gsap.to(window, {
-            duration: 1,
+            duration: 1.2,
             scrollTo: target,
-            ease: "power3.inOut"
+            ease: "power4.inOut"
         });
     });
-});
-
-// Анимация текста при входе
-gsap.from(".fade-in", {
-    y: 30,
-    opacity: 0,
-    duration: 1.2,
-    stagger: 0.2,
-    ease: "expo.out"
 });
