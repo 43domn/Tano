@@ -1,50 +1,46 @@
-// Инициализация Telegram Web App
 const tg = window.Telegram.WebApp;
-tg.expand(); // Разворачиваем приложение на весь экран
+tg.expand();
+tg.headerColor = '#000000';
 
-// Регистрация плагина скролла
 gsap.registerPlugin(ScrollTrigger);
 
-// Анимация появления элементов на главном экране
+// Анімація головного екрану при вході
 gsap.from(".fade-in", {
-    y: 40,
+    y: 30,
     opacity: 0,
     duration: 1.2,
     stagger: 0.2,
-    ease: "power4.out"
+    ease: "expo.out"
 });
 
-// Логика "особенного скроллинга" (Pinning)
+// Налаштування "особливого скролінгу" (Section Pinning & Snapping)
 const panels = gsap.utils.toArray('.panel');
 
-let tl = gsap.timeline({
-    scrollTrigger: {
-        trigger: ".sticky-container",
+panels.forEach((panel, i) => {
+    ScrollTrigger.create({
+        trigger: panel,
         start: "top top",
-        end: "+=200%", // Контейнер закреплен, пока пользователь не проскроллит 200% высоты экрана
-        scrub: 1,      // Плавная привязка анимации к скроллу
-        pin: true      // Останавливает скроллинг остального сайта
-    }
-});
+        pin: true,           // Фіксуємо блок
+        pinSpacing: false,   // Наступний блок заходить поверх попереднього
+        snap: 1,             // Доводка скролу до країв блоку
+        onEnter: () => {
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+        }
+    });
 
-// Появление первой панели
-tl.to(panels[0], { opacity: 1, duration: 1 })
-  // Переход от первой ко второй
-  .to(panels[0], { opacity: 0, duration: 1, scale: 0.9 }, "+=0.5")
-  .to(panels[1], { opacity: 1, duration: 1 }, "<")
-  // Переход от второй к третьей
-  .to(panels[1], { opacity: 0, duration: 1, scale: 0.9 }, "+=0.5")
-  .to(panels[2], { opacity: 1, duration: 1 }, "<");
-
-// Плавный скролл при клике на кнопку и Haptic Feedback (вибрация телефона)
-document.getElementById('main-btn').addEventListener('click', () => {
-    // Вызов тактильного отклика Telegram
-    if (tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('light');
-    }
-    
-    // Скролл к каталогу
-    document.getElementById('catalog-section').scrollIntoView({ 
-        behavior: 'smooth' 
+    // Плавна поява контенту всередині кожного блоку
+    gsap.from(panel.querySelector('.content-box'), {
+        scrollTrigger: {
+            trigger: panel,
+            start: "top center",
+            toggleActions: "play none none reverse"
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
     });
 });
+
+// Підтримка теми Telegram
+document.body.style.setProperty('--tg-theme-bg-color', tg.backgroundColor);
