@@ -89,3 +89,47 @@ p { font-size: 1.1rem; line-height: 1.5; opacity: 0.9; }
     40% {transform: translateY(-10px);}
     60% {transform: translateY(-5px);}
 }
+
+/* Дополнительные стили к предыдущим */
+
+.nav-menu {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 40px;
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 400px;
+    justify-content: space-around;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Адаптация цвета кнопок под темный фон */
+.nav-btn { color: #888; }
+.nav-btn.active { background: var(--yellow); color: var(--black); }
+
+/* Остальные стили секций остаются прежними, добавляем плавность */
+html {
+    scroll-behavior: auto; /* Важно для работы GSAP ScrollTo */
+}
