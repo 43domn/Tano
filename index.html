@@ -16,65 +16,76 @@
         <button class="nav-btn" data-target="#about">Про нас</button>
         <button class="nav-btn" data-target="#loyalty">Бонуси</button>
         <button class="nav-btn" data-target="#jobs">Робота</button>
-        <button class="nav-btn" data-target="#partnership">Бізнес</button>
+        <button class="nav-btn" data-target="#cooperation">Співпраця</button>
     </nav>
 
     <div id="app">
-        <section class="panel hero" id="hero">
-            <div class="content-wrapper">
+        <section class="panel hero white" id="hero">
+            <div class="content-box">
                 <img src="https://tano.ua/img/logo.png" alt="Tano Logo" class="logo fade-in">
-                <h1 class="fade-in">Тано Маркет</h1>
-                <p class="fade-in">Мережа магазинів біля вашого дому</p>
+                <span class="badge fade-in text-black">МЕРЕЖА МАГАЗИНІВ</span>
+                <h1 class="fade-in text-black">Тано Маркет</h1>
+                <p class="fade-in text-black subheading">Завжди поруч. Завжди свіже.</p>
+                <div class="image-wrapper fade-in">
+                    <span class="placeholder-text">Фото фасаду</span>
+                </div>
             </div>
         </section>
 
         <div class="pin-wrapper">
             <section class="panel about dark" id="about">
                 <div class="content-box">
-                    <span class="badge">01</span>
-                    <h2>Про нас</h2>
-                    <p>Тано Маркет — це сучасна мережа магазинів. Ми створюємо комфортний простір для щоденних покупок.</p>
+                    <span class="badge fade-in">01</span>
+                    <h2 class="fade-in">Про нас</h2>
+                    <p class="fade-in">Тано Маркет — це сучасний простір для щоденних покупок. Ми об'єднуємо якісні товари, доступні ціни та високий рівень сервісу.</p>
+                    <div class="image-wrapper fade-in">
+                        <span class="placeholder-text">Фото інтер'єру</span>
+                    </div>
                 </div>
             </section>
 
             <section class="panel loyalty yellow" id="loyalty">
                 <div class="content-box">
-                    <span class="badge">02</span>
-                    <h2>Програма лояльності</h2>
-                    <p>Отримуйте персональні пропозиції та накопичуйте бонуси з кожною покупкою.</p>
+                    <span class="badge fade-in text-black">02</span>
+                    <h2 class="fade-in text-black">Програма лояльності</h2>
+                    <p class="fade-in text-black">Накопичуйте бонуси з кожною покупкою та отримуйте ексклюзивні знижки для постійних клієнтів.</p>
+                    <button class="btn-filled text-black fade-in" onclick="window.location.href='https://tano.ua/'">Детальніше</button>
+                    <div class="image-wrapper fade-in light-border">
+                        <span class="placeholder-text text-black">Фото з клієнтами</span>
+                    </div>
                 </div>
             </section>
 
             <section class="panel jobs dark-gray" id="jobs">
                 <div class="content-box">
-                    <span class="badge">03</span>
-                    <h2>Вакансії</h2>
-                    <p>Стань частиною команди Тано! Розвивайся разом з нами та отримуй гідну заробітну плату.</p>
-                    <button class="btn-outline" onclick="window.location.href='mailto:office@tano.ua'">Надіслати резюме</button>
+                    <span class="badge fade-in">03</span>
+                    <h2 class="fade-in">Вакансії</h2>
+                    <p class="fade-in subheading">Стань частиною команди!</p>
+                    <p class="fade-in">Офіційне працевлаштування, гідна зарплата та можливість кар'єрного росту.</p>
+                    <button class="btn-outline fade-in" onclick="window.location.href='mailto:office@tano.ua'">Надіслати резюме</button>
+                    <div class="image-wrapper fade-in">
+                        <span class="placeholder-text">Фото команди</span>
+                    </div>
                 </div>
             </section>
 
-            <section class="panel partnership white" id="partnership">
+            <section class="panel cooperation white" id="cooperation">
                 <div class="content-box">
-                    <span class="badge">04</span>
-                    <h2>Співпраця</h2>
-                    <p>Запрошуємо постачальників та орендодавців до взаємовигідного партнерства.</p>
-                </div>
-            </section>
-        </div>
-    <h2 class="fade-in text-black">Співпраця</h2>
-                    <p class="fade-in text-black subheading">Запрошуємо постачальників</p>
-                    <p class="fade-in text-black">та орендодавців до взаємовигідного партнерства.</p>
-                    <div class="fade-in image-wrapper store-photo-placeholder cooperation-image">
-                        <span class="placeholder-text">Фото фасаду магазину з вивіскою (placeholder)</span>
+                    <span class="badge fade-in text-black">04</span>
+                    <h2 class="fade-in text-black">Співпраця</h2>
+                    <p class="fade-in text-black subheading">Запрошуємо до партнерства.</p>
+                    <p class="fade-in text-black">Шукаємо надійних постачальників та орендодавців для розширення мережі.</p>
+                    <button class="btn-filled-black fade-in" onclick="window.location.href='https://tano.ua/'">Стати партнером</button>
+                    <div class="image-wrapper fade-in dark-border">
+                        <span class="placeholder-text text-black">Фото вітрини</span>
                     </div>
-                    <button class="fade-in btn-filled" onclick="window.location.href='https://tano.ua/cooperation'">Дізнатися більше</button>
                 </div>
             </section>
         </div>
 
         <section class="panel footer black" id="contacts">
             <div class="content-box fade-in">
+                <img src="https://tano.ua/img/logo.png" alt="Tano Logo" class="logo-small">
                 <h2>Контакти</h2>
                 <div class="contact-item">
                     <a href="tel:+380986648564">(098) 664 85 64</a>
@@ -82,6 +93,7 @@
                 <div class="contact-item">
                     <a href="mailto:office@tano.ua">office@tano.ua</a>
                 </div>
+                <p class="address">Україна, мережа магазинів «Тано»</p>
             </div>
         </section>
     </div>
