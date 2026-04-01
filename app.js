@@ -3,56 +3,62 @@ tg.expand();
 tg.ready();
 tg.setHeaderColor('#050505');
 
-// Ждем полной загрузки DOM
-window.addEventListener('load', () => {
-    if (typeof gsap !== "undefined") {
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-        
-        // Включаем фиксацию только если GSAP доступен
-        document.body.style.overflow = "hidden";
-        
-        const panels = gsap.utils.toArray(".panel");
-        
-        // Делаем панели абсолютными только через JS
-        gsap.set(".panel", { position: "absolute", top: 0, left: 0 });
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "+=" + (panels.length * 100) + "%",
-                scrub: 1,
-                pin: true,
-                snap: 1 / (panels.length - 1)
-            }
-        });
+const panels = gsap.utils.toArray(".panel");
 
-        panels.forEach((panel, i) => {
-            if (i > 0) {
-                tl.from(panel.querySelector(".card"), {
-                    yPercent: 100,
-                    opacity: 0,
-                    duration: 1
-                }, i);
-            }
-        });
-
-        // Навигация меню
-        document.querySelectorAll(".menu-item").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const index = btn.getAttribute("data-index");
-                document.getElementById("menuOverlay").classList.remove("active");
-                
-                gsap.to(window, {
-                    scrollTo: { y: index * window.innerHeight, autoKill: false },
-                    duration: 1.2
-                });
-            });
-        });
+// Инициализация "Стоп-скролла"
+const tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: "#app-container",
+        start: "top top",
+        end: "+=" + (panels.length * 100) + "%",
+        scrub: 1.2,
+        pin: true,
+        snap: 1 / (panels.length - 1),
     }
 });
 
-// Бургер
+// Анимация появления каждой карточки
+panels.forEach((panel, i) => {
+    if (i > 0) {
+        tl.from(panel.querySelector(".card"), {
+            yPercent: 120,
+            opacity: 0,
+            scale: 0.7,
+            rotationX: -20,
+            duration: 1.5,
+            ease: "power4.out"
+        }, i);
+    }
+});
+
+// Логика меню
 const overlay = document.getElementById("menuOverlay");
-document.getElementById("openMenu").onclick = () => overlay.classList.add("active");
-document.getElementById("closeMenu").onclick = () => overlay.classList.remove("active");
+const openBtn = document.getElementById("openMenu");
+const closeBtn = document.getElementById("closeMenu");
+
+openBtn.onclick = () => {
+    overlay.classList.add("active");
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+};
+
+closeBtn.onclick = () => {
+    overlay.classList.remove("active");
+};
+
+// Навигация через меню
+document.querySelectorAll(".menu-item").forEach((btn) => {
+    btn.onclick = () => {
+        const index = btn.getAttribute("data-index");
+        overlay.classList.remove("active");
+        
+        gsap.to(window, {
+            scrollTo: { y: index * window.innerHeight, autoKill: false },
+            duration: 2,
+            ease: "power4.inOut"
+        });
+        
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    };
+});
