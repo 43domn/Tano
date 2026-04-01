@@ -3,71 +3,148 @@
 :root {
     --accent: #FFD200;
     --bg: #050505;
-    --card-bg: rgba(255, 255, 255, 0.04);
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
 }
 
-/* ... (попередні стилі неона та бургера залишаємо) ... */
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 25px;
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased; 
+    -webkit-tap-highlight-color: transparent;
 }
 
-.contact-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 20px;
-    text-decoration: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: 0.3s;
+body { 
+    background: var(--bg); 
+    color: white; 
+    font-family: -apple-system, system-ui, sans-serif; 
+    overflow-x: hidden; 
 }
 
-.contact-box:active {
-    background: var(--accent);
-    color: black;
-    transform: scale(0.98);
-}
-
-.contact-box .icon { font-size: 20px; }
-.contact-box span { font-size: 13px; font-weight: 700; }
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.social-circle {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 900;
-    color: var(--accent);
-}
-
-/* ФІКС СКРОЛУ (прибираємо лаги) */
 #app-container {
     will-change: transform;
 }
 
-.menu-item {
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
+/* НЕОН ТАНО */
+.neon-logo {
+    position: fixed; top: 22px; left: 20px; z-index: 1000;
+    font-weight: 900; font-size: 22px; letter-spacing: 2px;
+    color: #fff; text-shadow: 0 0 8px var(--accent), 0 0 20px var(--accent);
+    animation: neon-flicker 3s infinite alternate;
 }
 
-.menu-item:active {
-    border-color: var(--accent);
-    box-shadow: 0 0 15px rgba(255, 210, 0, 0.3);
+@keyframes neon-flicker { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0.8; filter: brightness(1.2); } 
 }
+
+/* БУРГЕР МЕНЮ */
+.burger-menu {
+    position: fixed; top: 18px; right: 20px; z-index: 1001;
+    background: rgba(30, 30, 30, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: 18px; padding: 8px 15px;
+    display: flex; align-items: center; gap: 8px; cursor: pointer; color: #fff;
+}
+
+.burger-icons .line { width: 14px; height: 2px; background: var(--accent); margin: 3px 0; transition: 0.3s; }
+.burger-menu span { font-size: 10px; font-weight: 900; letter-spacing: 1px; }
+
+/* ОКНО МЕНЮ */
+.menu-overlay {
+    position: fixed; inset: 0; z-index: 2000; visibility: hidden; opacity: 0;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(0,0,0,0.5);
+}
+
+.menu-overlay.active { visibility: visible; opacity: 1; }
+
+.menu-window {
+    position: absolute; top: 15px; left: 50%; transform: translateX(-50%) translateY(-20px);
+    width: 94%; max-width: 400px; height: 35vh;
+    background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(25px);
+    border-radius: 30px; display: flex; flex-direction: column; overflow: hidden;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 20px;
+}
+
+.menu-overlay.active .menu-window { transform: translateX(-50%) translateY(0); }
+
+/* АНИМИРОВАННЫЙ БОРТИК МЕНЮ */
+.menu-border-glow {
+    position: absolute; inset: 0; border-radius: 30px; padding: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background-size: 200% 100%; animation: flow 3s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; pointer-events: none;
+}
+
+@keyframes flow { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.menu-item {
+    background: rgba(255,255,255,0.05); border: 1px solid transparent; border-radius: 12px;
+    padding: 12px; color: #ccc; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.2s;
+}
+.menu-item:active { background: var(--accent); color: #000; border-color: var(--accent); }
+.close-menu { margin-top: auto; background: none; border: none; color: #666; font-size: 11px; font-weight: 700; cursor: pointer; padding: 10px; }
+
+/* КАРТОЧКИ И ПАНЕЛИ */
+.panel {
+    height: 100vh; width: 100%; display: flex; justify-content: center;
+    align-items: center; position: absolute; top: 0; left: 0;
+}
+
+.card {
+    width: 90%; max-width: 380px; padding: 45px 30px;
+    background: var(--glass); backdrop-filter: blur(30px); border-radius: 40px;
+    border: 1px solid var(--border); text-align: center;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+}
+
+.yellow-card { background: var(--accent); color: #000; border: none; }
+.white-card { background: #fdfdfd; color: #000; border: none; }
+
+h1 { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
+h2 { font-size: 28px; font-weight: 800; margin-bottom: 15px; line-height: 1.1; }
+p { font-size: 15px; line-height: 1.5; opacity: 0.8; }
+
+.shimmer-badge { font-size: 10px; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+.step-label { font-size: 10px; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.5; }
+.dark { color: #000; opacity: 0.4; }
+.info-tag { margin-top: 15px; display: inline-block; padding: 5px 10px; background: rgba(255,255,255,0.1); border-radius: 10px; font-size: 12px; font-weight: bold; }
+
+/* ВИРТУАЛЬНАЯ КАРТА */
+.virtual-card {
+    margin: 25px auto; width: 220px; height: 130px;
+    background: linear-gradient(135deg, #1a1a1a, #333); border-radius: 15px;
+    position: relative; padding: 20px; color: #fff; text-align: left;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+.chip { width: 30px; height: 22px; background: #d4af37; border-radius: 4px; margin-bottom: 25px; }
+.card-brand { position: absolute; top: 20px; right: 20px; font-weight: 900; font-size: 16px; color: var(--accent); }
+.card-holder { font-family: monospace; font-size: 12px; letter-spacing: 2px; opacity: 0.8; }
+
+/* КОНТАКТЫ */
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 25px; }
+.contact-box {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px; border-radius: 15px; text-decoration: none; color: white;
+    display: flex; align-items: center; gap: 15px; transition: 0.2s;
+}
+.contact-box:active { background: var(--accent); color: black; transform: scale(0.98); }
+.contact-box .icon { font-size: 20px; }
+.contact-box span { font-size: 13px; font-weight: 700; }
+.contact-box.full { justify-content: center; background: transparent; border: none; opacity: 0.6; }
+
+.social-links { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+.social-circle {
+    width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 900; color: var(--accent);
+}
+
+/* КНОПКИ */
+.btn-outline, .btn-black {
+    width: 100%; margin-top: 20px; padding: 16px; border-radius: 35px;
+    border: none; font-weight: 900; font-size: 12px; cursor: pointer;
+}
+.btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.btn-black { background: #000; color: #fff; }
