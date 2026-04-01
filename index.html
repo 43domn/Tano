@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tano Market Official</title>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     
-    <link rel="stylesheet" href="style.css?v=6.0">
+    <link rel="stylesheet" href="style.css?v=10.0">
 </head>
 <body>
     <div class="neon-logo">Тано</div>
@@ -18,7 +18,7 @@
     <button class="burger-menu" id="openMenu">
         <div class="burger-icons">
             <div class="line"></div>
-            <div class="line" style="width: 10px;"></div>
+            <div class="line" style="width: 12px;"></div>
         </div>
         <span>МЕНЮ</span>
     </button>
@@ -38,52 +38,63 @@
         </div>
     </div>
 
-    <main id="app-container">
-        <section class="panel">
-            <div class="card">
-                <div class="shimmer-badge">МЕРЕЖА МАГАЗИНІВ</div>
-                <h1>Тано Маркет</h1>
-                <p>Ваш надійний маркет біля дому. Ми дбаємо про якість, свіжість та ваш комфорт.</p>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="card">
-                <div class="step-label">01</div>
-                <h2>Завжди поруч</h2>
-                <p>Ми працюємо без посередників, щоб ви отримували найкраще за чесну ціну.</p>
-                <div class="info-tag">#свіжість_щодня</div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="card yellow-card">
-                <div class="step-label dark">02</div>
-                <h2>Лояльність</h2>
-                <p>Кешбек 1% з кожної покупки. Накопичуйте бали та витрачайте їх на смаколики.</p>
-                <div class="virtual-card">
-                    <div class="chip"></div>
-                    <div class="card-brand">TANO</div>
+    <div id="scroll-wrapper">
+        <main id="app-container">
+            <section class="panel">
+                <div class="card">
+                    <div class="shimmer-badge">МЕРЕЖА МАГАЗИНІВ</div>
+                    <h1>Тано Маркет</h1>
+                    <p>Ваш надійний маркет біля дому. Ми дбаємо про якість, свіжість та ваш комфорт кожного дня.</p>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="panel" id="final-contacts">
-            <div class="card contact-card">
-                <div class="step-label">ЗВ'ЯЗОК</div>
-                <h2>Контакти</h2>
-                <div class="contact-grid">
-                    <a href="tel:+380983596480" class="contact-box">
-                        <span>📞 +38 (098) 359 64 80</span>
-                    </a>
-                    <div class="contact-box full">
-                        <span>📍 м. Чернівці, вул. Руська 1а</span>
+            <section class="panel">
+                <div class="card">
+                    <div class="step-label">01</div>
+                    <h2>Завжди поруч</h2>
+                    <p>Ми працюємо без посередників, щоб ви отримували найкраще за чесну ціну.</p>
+                    <div class="info-tag">#свіжість_щодня</div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="card yellow-card">
+                    <div class="step-label dark">02</div>
+                    <h2>Лояльність</h2>
+                    <p>Кешбек 1% з кожної покупки. Накопичуйте бали та витрачайте їх на улюблені товари.</p>
+                    <div class="virtual-card">
+                        <div class="chip"></div>
+                        <div class="card-brand">TANO</div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
 
-    <script src="app.js?v=6.0"></script>
+            <section class="panel">
+                <div class="card">
+                    <div class="step-label">03</div>
+                    <h2>Робота у нас</h2>
+                    <p>Ставай частиною великої команди. Ми пропонуємо стабільність та розвиток.</p>
+                    <button class="action-btn">Вакансії</button>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="card contact-card">
+                    <div class="step-label">ЗВ'ЯЗОК</div>
+                    <h2>Контакти</h2>
+                    <div class="contact-grid">
+                        <a href="tel:+380983596480" class="contact-box">
+                            <span>📞 +38 (098) 359 64 80</span>
+                        </a>
+                        <div class="contact-box full">
+                            <span>📍 м. Чернівці, вул. Руська 1а</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js?v=10.0"></script>
 </body>
 </html>
