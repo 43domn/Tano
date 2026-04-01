@@ -1,4 +1,3 @@
-// Инициализация Telegram
 const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();
@@ -7,60 +6,62 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const panels = gsap.utils.toArray(".panel");
 
-// 1. ЛОГИКА "БЕЗУПРЕЧНОГО" СКРОЛЛИНГА
-// Мы создаем один большой таймлайн, который приклеивает секции
-const mainTl = gsap.timeline({
+// ЛОГИКА LAYERED PINNING (БЕЗ БАГОВ)
+const tl = gsap.timeline({
     scrollTrigger: {
-        trigger: "#mainContainer",
+        trigger: "body",
         start: "top top",
-        end: "+=" + (panels.length * 100) + "%", // Высота зависит от кол-ва блоков
-        scrub: 1, // Плавность скролла
-        pin: true, // Закрепление
-        snap: 1 / (panels.length - 1) // Авто-доводка до блока
+        end: "+=" + (panels.length * 100) + "%",
+        scrub: 1,
+        pin: true,
+        snap: 1 / (panels.length - 1)
     }
 });
 
 panels.forEach((panel, i) => {
     if (i > 0) {
-        // Эффект перехода: предыдущий блок уходит вглубь и затемняется
-        mainTl.to(panels[i-1].querySelector(".glass-card"), {
+        // Уход предыдущего блока: затемнение + уменьшение
+        tl.to(panels[i-1], {
             opacity: 0,
             scale: 0.8,
-            filter: "blur(15px)",
-            duration: 0.5
+            duration: 0.5,
+            filter: "blur(10px)",
+            pointerEvents: "none"
         }, i)
-        // Новый блок выплывает снизу
-        .from(panel.querySelector(".glass-card"), {
-            yPercent: 100,
+        // Появление текущего
+        .from(panel, {
             opacity: 0,
+            yPercent: 40,
             duration: 0.5
         }, i);
     }
 });
 
-// 2. ЛОГИКА МЕНЮ
-const menuToggle = document.getElementById("menuToggle");
+// ЛОГИКА ОКНА МЕНЮ
 const menuOverlay = document.getElementById("menuOverlay");
-const menuLinks = document.querySelectorAll(".menu-link");
+const openMenu = document.getElementById("openMenu");
+const closeMenu = document.getElementById("closeMenu");
 
-menuToggle.addEventListener("click", () => {
-    menuOverlay.classList.toggle("open");
-    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+openMenu.addEventListener("click", () => {
+    menuOverlay.classList.add("active");
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 });
 
-// Закрытие при клике по пункту и переход к секции
-menuLinks.forEach((link, i) => {
-    link.addEventListener("click", () => {
-        const target = link.getAttribute("data-target");
-        menuOverlay.classList.remove("open");
+closeMenu.addEventListener("click", () => {
+    menuOverlay.classList.remove("active");
+});
 
-        // Рассчитываем позицию для скролла
+// Плавный скролл к секции из меню
+document.querySelectorAll(".menu-item").forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+        menuOverlay.classList.remove("active");
+        
         const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const targetScroll = (i / (panels.length - 1)) * totalHeight;
+        const scrollTarget = (i / (panels.length - 1)) * totalHeight;
 
         gsap.to(window, {
-            scrollTo: targetScroll,
-            duration: 1.5,
+            scrollTo: scrollTarget,
+            duration: 1.2,
             ease: "power4.inOut"
         });
 
@@ -68,10 +69,7 @@ menuLinks.forEach((link, i) => {
     });
 });
 
-// Закрытие меню при клике вне окна
+// Обработка закрытия кликом вне меню
 menuOverlay.addEventListener("click", (e) => {
-    if (e.target === menuOverlay) menuOverlay.classList.remove("open");
+    if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
-
-// Подстройка под тему Telegram (цвета статус-бара)
-tg.setHeaderColor(tg.colorScheme === 'dark' ? '#0A0A0A' : '#ffffff');
