@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tano Market Premium</title>
+    <title>Tano Market Elite</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -11,65 +11,67 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="neon-logo">ТАНО</div>
+    <div class="neon-brand">Тано</div>
 
-    <div class="ambient-background">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
+    <div class="bg-wrapper">
+        <div class="blob"></div>
+        <div class="blob"></div>
     </div>
 
-    <nav class="nav-menu">
-        <button class="nav-btn active" data-target="#hero">🏠</button>
-        <button class="nav-btn" data-target="#about">Про нас</button>
-        <button class="nav-btn" data-target="#loyalty">Бонуси</button>
-        <button class="nav-btn" data-target="#jobs">Робота</button>
-        <button class="nav-btn" data-target="#cooperation">Співпраця</button>
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <button class="nav-item active" data-link="hero">🏠</button>
+            <button class="nav-item" data-link="about">ПРО НАС</button>
+            <button class="nav-item" data-link="loyalty">БОНУСИ</button>
+            <button class="nav-item" data-link="jobs">РОБОТА</button>
+            <button class="nav-item" data-link="biz">БІЗНЕС</button>
+        </div>
     </nav>
 
-    <div id="app">
-        <section class="panel" id="hero">
-            <div class="glass-panel">
-                <img src="https://tano.ua/img/logo.png" alt="Logo" class="logo animate">
-                <h1 class="animate">Тано Маркет</h1>
-                <p class="animate">Завжди поруч. Завжди свіже.</p>
+    <main id="scroll-container">
+        <section class="panel hero" id="hero">
+            <div class="glass-card">
+                <div class="shimmer-text">МЕРЕЖА МАГАЗИНІВ</div>
+                <h1>Тано Маркет</h1>
+                <p>Твій комфорт у кожній покупці</p>
             </div>
         </section>
 
         <section class="panel" id="about">
-            <div class="glass-panel">
-                <span class="badge animate">01</span>
-                <h2 class="animate">Про нас</h2>
-                <p class="animate">Сучасний простір для щоденних покупок з найкращим сервісом.</p>
+            <div class="glass-card">
+                <span class="step-num">01</span>
+                <h2>Про нас</h2>
+                <p>Ми створюємо магазини, куди хочеться повертатися щодня.</p>
             </div>
         </section>
 
         <section class="panel" id="loyalty">
-            <div class="glass-panel yellow-mode">
-                <span class="badge animate">02</span>
-                <h2 class="animate">Бонуси</h2>
-                <p class="animate">Накопичуйте бали та отримуйте персональні знижки.</p>
-                <button class="btn-shimmer animate">Відкрити картку</button>
+            <div class="glass-card yellow-theme">
+                <span class="step-num">02</span>
+                <h2>Бонуси</h2>
+                <p>Накопичуй вигоду з кожним візитом до нас.</p>
+                <button class="wow-btn">ДЕТАЛЬНІШЕ</button>
             </div>
         </section>
 
         <section class="panel" id="jobs">
-            <div class="glass-panel">
-                <span class="badge animate">03</span>
-                <h2 class="animate">Вакансії</h2>
-                <p class="animate">Стань частиною нашої дружньої команди вже сьогодні.</p>
-                <button class="btn-outline animate">Переглянути</button>
+            <div class="glass-card">
+                <span class="step-num">03</span>
+                <h2>Вакансії</h2>
+                <p>Шукаємо драйвових людей у нашу команду.</p>
+                <button class="wow-btn-outline">ВІДПРАВИТИ РЕЗЮМЕ</button>
             </div>
         </section>
 
-        <section class="panel" id="cooperation">
-            <div class="glass-panel white-mode">
-                <span class="badge animate">04</span>
-                <h2 class="animate">Співпраця</h2>
-                <p class="animate">Шукаємо партнерів для спільного розвитку та росту.</p>
-                <button class="btn-black animate">Зв'язатися</button>
+        <section class="panel" id="biz">
+            <div class="glass-card white-theme">
+                <span class="step-num">04</span>
+                <h2>Партнерство</h2>
+                <p>Розвивай свій бізнес разом із «Тано Маркет».</p>
+                <button class="wow-btn-dark">СТАТИ ПАРТНЕРОМ</button>
             </div>
         </section>
-    </div>
+    </main>
 
     <script src="app.js"></script>
 </body>
