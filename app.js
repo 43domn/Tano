@@ -6,38 +6,38 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const panels = gsap.utils.toArray(".panel");
 
-// ЛОГИКА LAYERED PINNING (БЕЗ БАГОВ)
+// 1. НАЛАШТУВАННЯ СКРОЛУ (БЕЗ АВТОСКРОЛУ)
+// Створюємо таймлайн, який керує "шарами"
 const tl = gsap.timeline({
     scrollTrigger: {
         trigger: "body",
         start: "top top",
         end: "+=" + (panels.length * 100) + "%",
-        scrub: 1,
+        scrub: 1.2, // М'якість руху
         pin: true,
-        snap: 1 / (panels.length - 1)
+        // snap: 1 / (panels.length - 1) <-- ЦЕ ВИДАЛЕНО, тепер скрол вільний
     }
 });
 
 panels.forEach((panel, i) => {
     if (i > 0) {
-        // Уход предыдущего блока: затемнение + уменьшение
-        tl.to(panels[i-1], {
+        // Ефект відходу попередньої картки (глибина)
+        tl.to(panels[i-1].querySelector(".card"), {
             opacity: 0,
             scale: 0.8,
-            duration: 0.5,
             filter: "blur(10px)",
-            pointerEvents: "none"
+            duration: 0.5
         }, i)
-        // Появление текущего
-        .from(panel, {
+        // Поява нової картки
+        .from(panel.querySelector(".card"), {
             opacity: 0,
-            yPercent: 40,
+            yPercent: 50,
             duration: 0.5
         }, i);
     }
 });
 
-// ЛОГИКА ОКНА МЕНЮ
+// 2. ЛОГИКА МЕНЮ (ВИПРАВЛЕНА)
 const menuOverlay = document.getElementById("menuOverlay");
 const openMenu = document.getElementById("openMenu");
 const closeMenu = document.getElementById("closeMenu");
@@ -51,17 +51,19 @@ closeMenu.addEventListener("click", () => {
     menuOverlay.classList.remove("active");
 });
 
-// Плавный скролл к секции из меню
-document.querySelectorAll(".menu-item").forEach((btn, i) => {
+// ПЕРЕХІД ДО РОЗДІЛУ
+document.querySelectorAll(".menu-item").forEach((btn) => {
     btn.addEventListener("click", () => {
+        const index = parseInt(btn.getAttribute("data-index"));
         menuOverlay.classList.remove("active");
-        
-        const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollTarget = (i / (panels.length - 1)) * totalHeight;
+
+        // Розраховуємо точну позицію в пікселях
+        // Оскільки ми використовуємо pinning, позиція = індекс * висота вьюпорту
+        const scrollDistance = index * window.innerHeight;
 
         gsap.to(window, {
-            scrollTo: scrollTarget,
-            duration: 1.2,
+            scrollTo: { y: scrollDistance, autoKill: false },
+            duration: 1.5,
             ease: "power4.inOut"
         });
 
@@ -69,7 +71,7 @@ document.querySelectorAll(".menu-item").forEach((btn, i) => {
     });
 });
 
-// Обработка закрытия кликом вне меню
+// Клік поза вікном
 menuOverlay.addEventListener("click", (e) => {
     if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
