@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tano Premium App</title>
+    <title>Tano Market Official</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -11,77 +11,92 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="neon-brand">Тано</div>
+    <div class="neon-logo">Тано</div>
 
-    <button class="menu-toggle" id="menuToggle">
-        <span class="dot"></span>
-        <span class="text">МЕНЮ</span>
+    <button class="burger-menu" id="openMenu">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <span>МЕНЮ</span>
     </button>
 
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-window">
-            <div class="menu-content">
-                <button class="menu-link" data-target="hero">ГОЛОВНА</button>
-                <button class="menu-link" data-target="about">ПРО НАС</button>
-                <button class="menu-link" data-target="loyalty">БОНУСИ</button>
-                <button class="menu-link" data-target="jobs">РОБОТА</button>
-                <button class="menu-link" data-target="biz">БІЗНЕС</button>
+            <div class="menu-border-glow"></div>
+            <div class="menu-grid">
+                <button class="menu-item" data-go="hero">ГОЛОВНА</button>
+                <button class="menu-item" data-go="about">ПРО МЕРЕЖУ</button>
+                <button class="menu-item" data-go="loyalty">ЛОЯЛЬНІСТЬ</button>
+                <button class="menu-item" data-go="jobs">КАР'ЄРА</button>
+                <button class="menu-item" data-go="collab">СПІВПРАЦЯ</button>
+                <button class="menu-item" data-go="contacts">КОНТАКТИ</button>
             </div>
-            <div class="menu-border"></div>
+            <button class="close-menu" id="closeMenu">Закрити</button>
         </div>
     </div>
 
-    <main id="mainContainer">
-        <section class="panel hero" id="hero">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <span class="badge">PREMIUM</span>
-                    <h1>Тано Маркет</h1>
-                    <p>Твій комфорт у кожній покупці. Ми робимо якість доступною.</p>
-                </div>
+    <main id="app-container">
+        <section class="panel" id="hero">
+            <div class="card">
+                <div class="shimmer-badge">МЕРЕЖА МАГАЗИНІВ</div>
+                <h1>Тано Маркет</h1>
+                <p>Ваш надійний маркет біля дому. Ми дбаємо про якість, свіжість та ваш комфорт кожного дня.</p>
             </div>
         </section>
 
         <section class="panel" id="about">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <div class="num-bg">01</div>
-                    <h2>Про нас</h2>
-                    <p>Сучасна мережа магазинів біля дому з акцентом на свіжість та сервіс.</p>
-                </div>
+            <div class="card">
+                <div class="step-label">ПРО НАС</div>
+                <h2>Завжди поруч</h2>
+                <p>«Тано» — це не просто магазини, а простір, де кожен покупець відчуває турботу. Ми працюємо без посередників, щоб забезпечити найкращі ціни.</p>
+                <div class="info-pill">Понад 50 магазинів</div>
             </div>
         </section>
 
         <section class="panel" id="loyalty">
-            <div class="content-wrapper">
-                <div class="glass-card yellow-theme">
-                    <div class="num-bg">02</div>
-                    <h2>Бонуси</h2>
-                    <p>Накопичуйте бали та витрачайте їх на улюблені товари.</p>
-                    <button class="action-btn dark">ДЕТАЛЬНІШЕ</button>
+            <div class="card yellow-card">
+                <div class="step-label dark">БОНУСИ</div>
+                <h2>Програма лояльності</h2>
+                <p>Отримуйте 1% кешбеку з кожної покупки. Накопичуйте бонуси та розраховуйтесь ними замість грошей.</p>
+                <div class="virtual-card">
+                    <div class="card-chip"></div>
+                    <div class="card-logo">Тано</div>
+                    <div class="card-number">**** **** 4242</div>
                 </div>
+                <button class="btn-dark">ПЕРЕВІРИТИ БАЛАНС</button>
             </div>
         </section>
 
         <section class="panel" id="jobs">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <div class="num-bg">03</div>
-                    <h2>Робота</h2>
-                    <p>Стань частиною нашої команди. Ми пропонуємо стабільність та ріст.</p>
-                    <button class="action-btn outline">ВАКАНСІЇ</button>
-                </div>
+            <div class="card">
+                <div class="step-label">РОБОТА</div>
+                <h2>Приєднуйтесь до сім'ї</h2>
+                <p>Шукаєте стабільність? Ми пропонуємо офіційне працевлаштування, гнучкий графік та кар'єрний ріст у драйвовій команді.</p>
+                <button class="btn-outline">АКТУАЛЬНІ ВАКАНСІЇ</button>
             </div>
         </section>
 
-        <section class="panel" id="biz">
-            <div class="content-wrapper">
-                <div class="glass-card white-theme">
-                    <div class="num-bg">04</div>
-                    <h2>Бізнес</h2>
-                    <p>Партнерство з «Тано Маркет» — це шлях до спільного успіху.</p>
-                    <button class="action-btn black">КОНТАКТИ</button>
+        <section class="panel" id="collab">
+            <div class="card white-card">
+                <div class="step-label dark">ПАРТНЕРСТВО</div>
+                <h2>Співпраця</h2>
+                <p>Запрошуємо орендодавців та постачальників. Пропонуємо прозорі та вигідні умови для спільного розвитку бізнесу.</p>
+                <button class="btn-black">СТАТИ ПАРТНЕРОМ</button>
+            </div>
+        </section>
+
+        <section class="panel" id="contacts">
+            <div class="card">
+                <div class="step-label">ЗВ'ЯЗОК</div>
+                <h2>Наші контакти</h2>
+                <div class="contact-row">
+                    <span class="label">Телефон:</span>
+                    <a href="tel:+380983596480">+38 (098) 359 64 80</a>
                 </div>
+                <div class="contact-row">
+                    <span class="label">Email:</span>
+                    <a href="mailto:office@tano.ua">office@tano.ua</a>
+                </div>
+                <p class="small-text">м. Чернівці, вул. Руська 1а</p>
             </div>
         </section>
     </main>
