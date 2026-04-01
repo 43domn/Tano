@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Тано Маркет</title>
+    <title>Тано Маркет PRO</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="ambient-background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <nav class="nav-menu">
         <button class="nav-btn active" data-target="#hero">🏠</button>
         <button class="nav-btn" data-target="#about">Про нас</button>
@@ -20,59 +26,70 @@
     </nav>
 
     <div id="app">
-        <section class="panel hero white" id="hero">
-            <div class="content-box">
-                <img src="https://tano.ua/img/logo.png" alt="Tano Logo" class="logo fade-in">
-                <span class="badge fade-in text-black">МЕРЕЖА МАГАЗИНІВ</span>
-                <h1 class="fade-in text-black">Тано Маркет</h1>
-                <p class="fade-in text-black subheading">Завжди поруч. Завжди свіже.</p>
-                <div class="image-wrapper fade-in"><span class="placeholder-text">Фото фасаду</span></div>
+        <section class="panel hero" id="hero">
+            <div class="glass-panel content-box">
+                <img src="https://tano.ua/img/logo.png" alt="Tano Logo" class="logo animate-pop">
+                <span class="badge animate-pop text-gradient">МЕРЕЖА МАГАЗИНІВ</span>
+                <h1 class="animate-pop">Тано Маркет</h1>
+                <p class="animate-pop subheading">Завжди поруч. Завжди свіже.</p>
+                <div class="image-wrapper animate-pop">
+                    <span class="placeholder-text">Фото фасаду</span>
+                </div>
             </div>
         </section>
 
         <div class="pin-wrapper">
-            <section class="panel about dark" id="about">
-                <div class="content-box">
-                    <span class="badge fade-in">01</span>
-                    <h2 class="fade-in">Про нас</h2>
-                    <p class="fade-in">Сучасний простір для щоденних покупок. Ми об'єднуємо якісні товари та високий рівень сервісу.</p>
-                    <div class="image-wrapper fade-in"><span class="placeholder-text">Фото інтер'єру</span></div>
+            <section class="panel about" id="about">
+                <div class="glass-panel content-box">
+                    <span class="badge animate-pop">01</span>
+                    <h2 class="animate-pop">Про нас</h2>
+                    <p class="animate-pop">Сучасний простір для щоденних покупок. Ми об'єднуємо якісні товари, доступні ціни та преміальний сервіс.</p>
+                    <div class="image-wrapper animate-pop">
+                        <span class="placeholder-text">Фото інтер'єру</span>
+                    </div>
                 </div>
             </section>
 
-            <section class="panel loyalty yellow" id="loyalty">
-                <div class="content-box">
-                    <span class="badge fade-in text-black">02</span>
-                    <h2 class="fade-in text-black">Програма лояльності</h2>
-                    <p class="fade-in text-black">Накопичуйте бонуси з кожною покупкою та отримуйте ексклюзивні знижки.</p>
-                    <button class="btn-filled text-black fade-in" onclick="window.location.href='https://tano.ua/'">Детальніше</button>
-                    <div class="image-wrapper fade-in light-border"><span class="placeholder-text text-black">Програма лояльності</span></div>
+            <section class="panel loyalty" id="loyalty">
+                <div class="glass-panel content-box yellow-glass">
+                    <span class="badge animate-pop text-black">02</span>
+                    <h2 class="animate-pop text-black">Програма лояльності</h2>
+                    <p class="animate-pop text-black">Накопичуйте бонуси з кожною покупкою та отримуйте ексклюзивні знижки.</p>
+                    <button class="btn-filled text-black btn-shimmer animate-pop" onclick="window.location.href='https://tano.ua/'">Детальніше</button>
+                    <div class="image-wrapper light-border animate-pop">
+                        <span class="placeholder-text text-black">Фото з клієнтами</span>
+                    </div>
                 </div>
             </section>
 
-            <section class="panel jobs dark-gray" id="jobs">
-                <div class="content-box">
-                    <span class="badge fade-in">03</span>
-                    <h2 class="fade-in">Вакансії</h2>
-                    <p class="fade-in">Стань частиною команди! Офіційне працевлаштування та можливість росту.</p>
-                    <button class="btn-outline fade-in" onclick="window.location.href='mailto:office@tano.ua'">Надіслати резюме</button>
-                    <div class="image-wrapper fade-in"><span class="placeholder-text">Фото команди</span></div>
+            <section class="panel jobs" id="jobs">
+                <div class="glass-panel content-box">
+                    <span class="badge animate-pop">03</span>
+                    <h2 class="animate-pop">Вакансії</h2>
+                    <p class="animate-pop subheading">Стань частиною команди!</p>
+                    <p class="animate-pop">Офіційне працевлаштування, гідна зарплата та швидкий кар'єрний ріст.</p>
+                    <button class="btn-outline btn-shimmer animate-pop" onclick="window.location.href='mailto:office@tano.ua'">Надіслати резюме</button>
+                    <div class="image-wrapper animate-pop">
+                        <span class="placeholder-text">Фото команди</span>
+                    </div>
                 </div>
             </section>
 
-            <section class="panel cooperation white" id="cooperation">
-                <div class="content-box">
-                    <span class="badge fade-in text-black">04</span>
-                    <h2 class="fade-in text-black">Співпраця</h2>
-                    <p class="fade-in text-black">Шукаємо надійних постачальників та орендодавців для розширення мережі.</p>
-                    <button class="btn-filled-black fade-in" onclick="window.location.href='https://tano.ua/'">Стати партнером</button>
-                    <div class="image-wrapper fade-in dark-border"><span class="placeholder-text text-black">Фото вітрини</span></div>
+            <section class="panel cooperation" id="cooperation">
+                <div class="glass-panel content-box light-glass">
+                    <span class="badge animate-pop text-black">04</span>
+                    <h2 class="animate-pop text-black">Співпраця</h2>
+                    <p class="animate-pop text-black">Шукаємо надійних постачальників та орендодавців для розширення мережі.</p>
+                    <button class="btn-filled-black btn-shimmer animate-pop" onclick="window.location.href='https://tano.ua/'">Стати партнером</button>
+                    <div class="image-wrapper dark-border animate-pop">
+                        <span class="placeholder-text text-black">Фото вітрини</span>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <section class="panel footer black" id="contacts">
-            <div class="content-box fade-in">
+        <section class="panel footer" id="contacts">
+            <div class="glass-panel content-box animate-pop">
                 <img src="https://tano.ua/img/logo.png" alt="Tano Logo" class="logo-small">
                 <h2>Контакти</h2>
                 <div class="contact-item"><a href="tel:+380986648564">(098) 664 85 64</a></div>
