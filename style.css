@@ -1,78 +1,84 @@
 :root {
-    --yellow: #FFD200;
-    --black: #050505;
-    --glass: rgba(255, 255, 255, 0.05);
+    --accent: #FFD200;
+    --bg: #080808;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-body { background: var(--black); color: white; overflow-x: hidden; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: #fff; font-family: 'SF Pro Display', sans-serif; overflow-x: hidden; }
 
-/* НЕОНОВИЙ ЛОГОТИП */
-.neon-logo {
-    position: fixed; top: 20px; left: 20px; z-index: 100;
-    font-weight: 900; font-size: 18px; letter-spacing: 2px;
-    color: #fff; text-shadow: 0 0 10px var(--yellow), 0 0 20px var(--yellow);
-    animation: neon-flicker 3s infinite alternate;
+/* НЕОНОВЕ ЛОГО */
+.neon-brand {
+    position: fixed; top: 25px; left: 25px; z-index: 1000;
+    font-weight: 900; font-size: 22px; letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 7px rgba(255,210,0,0.3), 0 0 15px var(--accent);
+    animation: neon-pulse 2s infinite ease-in-out;
 }
 
-@keyframes neon-flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-    20%, 22%, 24%, 55% { opacity: 0.5; }
+@keyframes neon-pulse {
+    0%, 100% { opacity: 1; filter: brightness(1.2); }
+    50% { opacity: 0.8; filter: brightness(0.8); }
 }
 
-/* ІДЕАЛЬНЕ АДАПТИВНЕ МЕНЮ */
-.nav-menu {
+/* ФОНОВІ БЛОБИ */
+.bg-wrapper { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+.blob {
+    position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    filter: blur(80px); opacity: 0.15; animation: move 20s infinite alternate;
+}
+.blob:last-child { right: -100px; bottom: -100px; background: #fff; opacity: 0.05; }
+@keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
+
+/* МЕНЮ */
+.nav-bar {
     position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
-    width: 92%; max-width: 400px; z-index: 1000;
-    display: flex; background: rgba(30, 30, 30, 0.6);
-    backdrop-filter: blur(15px); border-radius: 40px; padding: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90%; max-width: 450px; z-index: 1000;
 }
-
-.nav-btn {
-    flex: 1; border: none; background: transparent; color: #aaa;
-    font-size: clamp(8px, 2.5vw, 10px); font-weight: 700;
-    text-transform: uppercase; padding: 12px 2px; cursor: pointer;
-    transition: 0.3s; white-space: nowrap;
+.nav-inner {
+    background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px);
+    border: 1px solid var(--border); border-radius: 50px;
+    display: flex; padding: 6px; gap: 4px;
 }
+.nav-item {
+    flex: 1; border: none; background: none; color: #777;
+    font-size: clamp(8px, 2.3vw, 10px); font-weight: 800;
+    padding: 12px 2px; cursor: pointer; transition: 0.4s;
+    border-radius: 40px; white-space: nowrap;
+}
+.nav-item.active { background: var(--accent); color: #000; }
 
-.nav-btn.active { background: var(--yellow); color: #000; border-radius: 30px; }
-
-/* ПАНЕЛІ ТА ЕФЕКТИ */
+/* ПАНЕЛІ ТА СКЛО */
 .panel {
     height: 100vh; width: 100%; display: flex;
-    justify-content: center; align-items: center; padding: 20px;
+    justify-content: center; align-items: center;
+    position: absolute; top: 0; left: 0; padding: 20px;
+}
+.glass-card {
+    width: 100%; max-width: 400px; padding: 50px 30px;
+    background: var(--glass); backdrop-filter: blur(30px);
+    border: 1px solid var(--border); border-radius: 40px;
+    text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
-.glass-panel {
-    width: 100%; max-width: 380px; padding: 40px 25px;
-    background: var(--glass); backdrop-filter: blur(20px);
-    border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: center;
+.yellow-theme { background: rgba(255, 210, 0, 0.95); color: #000; border: none; }
+.white-theme { background: rgba(255, 255, 255, 0.95); color: #000; border: none; }
+
+h1 { font-size: 3rem; font-weight: 900; margin-bottom: 10px; }
+h2 { font-size: 2.5rem; margin-bottom: 15px; }
+.step-num { display: block; font-weight: 900; opacity: 0.2; font-size: 1.2rem; margin-bottom: 10px; }
+
+/* КНОПКИ ТА ШИММЕР */
+.wow-btn {
+    background: #000; color: var(--accent); border: none;
+    padding: 18px 40px; border-radius: 40px; font-weight: 900;
+    margin-top: 25px; position: relative; overflow: hidden;
 }
-
-.yellow-mode { background: rgba(255, 210, 0, 0.9); color: #000; }
-.white-mode { background: rgba(255, 255, 255, 0.9); color: #000; }
-
-h2 { font-size: 2.5rem; margin-bottom: 10px; }
-.badge { font-weight: 800; opacity: 0.5; letter-spacing: 2px; }
-
-/* КНОПКА З ПЕРЕЛИВОМ */
-.btn-shimmer {
-    background: #000; color: var(--yellow); border: none;
-    padding: 15px 30px; border-radius: 30px; font-weight: 800;
-    position: relative; overflow: hidden; margin-top: 20px;
-}
-
-.btn-shimmer::after {
+.wow-btn::after {
     content: ''; position: absolute; top: 0; left: -100%;
-    width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transform: skewX(-20deg); animation: shimmer 3s infinite;
+    width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-25deg); animation: shimmer 3s infinite;
 }
 @keyframes shimmer { 100% { left: 200%; } }
-
-/* ФОНОВІ ПЛЯМИ */
-.ambient-background { position: fixed; inset: 0; z-index: -1; }
-.blob { position: absolute; width: 300px; height: 300px; background: var(--yellow); filter: blur(100px); opacity: 0.2; }
-.blob-1 { top: 10%; left: 10%; }
-.blob-2 { bottom: 10%; right: 10%; background: #fff; }
