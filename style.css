@@ -1,84 +1,147 @@
 :root {
-    --accent: #FFD200;
-    --bg: #080808;
-    --glass: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
+    --yellow: #FFD200;
+    --bg: #000000;
+    --card-bg: rgba(28, 28, 30, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-body { background: var(--bg); color: #fff; font-family: 'SF Pro Display', sans-serif; overflow-x: hidden; }
 
-/* НЕОНОВЕ ЛОГО */
-.neon-brand {
-    position: fixed; top: 25px; left: 25px; z-index: 1000;
-    font-weight: 900; font-size: 22px; letter-spacing: 1px;
+body {
+    background: var(--bg);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+}
+
+/* НЕОНОВЫЙ ТЕКСТ */
+.neon-tano {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
     color: #fff;
-    text-shadow: 0 0 7px rgba(255,210,0,0.3), 0 0 15px var(--accent);
-    animation: neon-pulse 2s infinite ease-in-out;
+    letter-spacing: 2px;
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px var(--yellow),
+        0 0 20px var(--yellow),
+        0 0 40px var(--yellow);
+    animation: neon-flicker 2s infinite alternate;
 }
 
-@keyframes neon-pulse {
-    0%, 100% { opacity: 1; filter: brightness(1.2); }
-    50% { opacity: 0.8; filter: brightness(0.8); }
+@keyframes neon-flicker {
+    0%, 100% { opacity: 1; filter: brightness(1); }
+    50% { opacity: 0.8; filter: brightness(1.2); }
+    80% { opacity: 0.9; }
 }
 
-/* ФОНОВІ БЛОБИ */
-.bg-wrapper { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-.blob {
-    position: absolute; width: 400px; height: 400px;
-    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-    filter: blur(80px); opacity: 0.15; animation: move 20s infinite alternate;
+/* НАВИГАЦИЯ */
+.nav-container {
+    position: fixed;
+    top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+    padding: 0 10px;
 }
-.blob:last-child { right: -100px; bottom: -100px; background: #fff; opacity: 0.05; }
-@keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
 
-/* МЕНЮ */
 .nav-bar {
-    position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
-    width: 90%; max-width: 450px; z-index: 1000;
+    background: rgba(44, 44, 46, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 0.5px solid var(--border);
+    border-radius: 40px;
+    display: flex;
+    padding: 4px;
+    gap: 4px;
+    width: 100%;
+    max-width: 400px;
 }
-.nav-inner {
-    background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px);
-    border: 1px solid var(--border); border-radius: 50px;
-    display: flex; padding: 6px; gap: 4px;
-}
-.nav-item {
-    flex: 1; border: none; background: none; color: #777;
-    font-size: clamp(8px, 2.3vw, 10px); font-weight: 800;
-    padding: 12px 2px; cursor: pointer; transition: 0.4s;
-    border-radius: 40px; white-space: nowrap;
-}
-.nav-item.active { background: var(--accent); color: #000; }
 
-/* ПАНЕЛІ ТА СКЛО */
+.nav-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #8e8e93;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 10px 2px;
+    border-radius: 30px;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.nav-btn.active {
+    background: var(--yellow);
+    color: black;
+}
+
+/* СКРОЛЛ ПАНЕЛИ */
+.scroll-wrapper { width: 100%; }
+
 .panel {
-    height: 100vh; width: 100%; display: flex;
-    justify-content: center; align-items: center;
-    position: absolute; top: 0; left: 0; padding: 20px;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
 }
+
 .glass-card {
-    width: 100%; max-width: 400px; padding: 50px 30px;
-    background: var(--glass); backdrop-filter: blur(30px);
-    border: 1px solid var(--border); border-radius: 40px;
-    text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 360px;
+    padding: 40px 25px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 35px;
+    border: 1px solid var(--border);
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
-.yellow-theme { background: rgba(255, 210, 0, 0.95); color: #000; border: none; }
-.white-theme { background: rgba(255, 255, 255, 0.95); color: #000; border: none; }
+.glass-card.yellow { background: var(--yellow); color: black; border: none; }
+.glass-card.white { background: #f2f2f7; color: black; border: none; }
 
-h1 { font-size: 3rem; font-weight: 900; margin-bottom: 10px; }
-h2 { font-size: 2.5rem; margin-bottom: 15px; }
-.step-num { display: block; font-weight: 900; opacity: 0.2; font-size: 1.2rem; margin-bottom: 10px; }
+/* ЭЛЕМЕНТЫ КАРТОЧКИ */
+h1 { font-size: 34px; font-weight: 900; margin-bottom: 8px; }
+h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+p { font-size: 16px; opacity: 0.8; line-height: 1.4; }
+.step { font-size: 14px; font-weight: 900; opacity: 0.3; margin-bottom: 10px; }
+.badge { font-size: 12px; font-weight: 900; color: var(--yellow); letter-spacing: 2px; margin-bottom: 10px; }
 
-/* КНОПКИ ТА ШИММЕР */
-.wow-btn {
-    background: #000; color: var(--accent); border: none;
-    padding: 18px 40px; border-radius: 40px; font-weight: 900;
-    margin-top: 25px; position: relative; overflow: hidden;
+.photo-placeholder {
+    margin-top: 25px;
+    height: 160px;
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.4;
 }
-.wow-btn::after {
-    content: ''; position: absolute; top: 0; left: -100%;
-    width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transform: skewX(-25deg); animation: shimmer 3s infinite;
+
+/* КНОПКИ */
+.main-button {
+    width: 100%;
+    padding: 16px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 900;
+    font-size: 14px;
+    margin-top: 25px;
+    cursor: pointer;
 }
-@keyframes shimmer { 100% { left: 200%; } }
+.main-button.dark { background: #000; color: var(--yellow); }
+.main-button.outline { background: transparent; border: 2px solid var(--yellow); color: var(--yellow); }
+.main-button.black { background: #000; color: #fff; }
