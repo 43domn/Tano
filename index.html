@@ -3,103 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tano Market Official</title>
+    <title>Tano Market Premium Light</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <link rel="stylesheet" href="style.css?v=15">
+    <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
-    <div class="neon-brand">ТАНО</div>
+    <div class="brand-logo">TANO</div>
 
-    <button class="menu-toggle" id="menuToggle">
-        <span class="dot"></span>
-        <span class="text">МЕНЮ</span>
+    <button class="menu-btn" id="menuToggle">
+        <span class="menu-icon"></span>
+        <span class="menu-text">МЕНЮ</span>
     </button>
 
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-window">
-            <div class="menu-grid">
-                <button class="menu-item" data-index="0">ГОЛОВНА</button>
-                <button class="menu-item" data-index="1">ПРО НАС</button>
-                <button class="menu-item" data-index="2">ЛОЯЛЬНІСТЬ</button>
-                <button class="menu-item" data-index="3">КАР'ЄРА</button>
-                <button class="menu-item" data-index="4">БІЗНЕС</button>
-                <button class="menu-item" data-index="5">КОНТАКТИ</button>
+    <div class="menu-layer" id="menuOverlay">
+        <div class="menu-sheet">
+            <div class="menu-header">Навігація</div>
+            <div class="menu-links">
+                <button class="link-item" data-index="0">Головна</button>
+                <button class="link-item" data-index="1">Про нас</button>
+                <button class="link-item" data-index="2">Лояльність</button>
+                <button class="link-item" data-index="3">Вакансії</button>
+                <button class="link-item" data-index="4">Партнерам</button>
+                <button class="link-item" data-index="5">Контакти</button>
             </div>
-            <div class="menu-border-glow"></div>
         </div>
     </div>
 
-    <main id="app-container">
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <div class="badge">PREMIUM</div>
-                    <h1>Тано Маркет</h1>
-                    <p>Ваш надійний маркет біля дому. Ми дбаємо про якість та ваш комфорт.</p>
+    <div id="smooth-wrapper">
+        <section class="screen">
+            <div class="card main-card">
+                <div class="tag">PREMIUM MARKET</div>
+                <h1>Тано Маркет</h1>
+                <p>Естетика якості у кожній деталі вашого щоденного кошика.</p>
+                <div class="scroll-hint">Гортайте вниз</div>
+            </div>
+        </section>
+
+        <section class="screen">
+            <div class="card">
+                <div class="num">01</div>
+                <h2>Завжди поруч</h2>
+                <p>Ми створюємо простір, де покупки приносять задоволення, а свіжість є стандартом.</p>
+            </div>
+        </section>
+
+        <section class="screen">
+            <div class="card gold-card">
+                <div class="num" style="color: rgba(0,0,0,0.1)">02</div>
+                <h2>TANO Loyalty</h2>
+                <p>Отримуйте 1% кешбеку з кожним чеком. Ваші привілеї починаються тут.</p>
+                <div class="pay-card">
+                    <div class="pay-chip"></div>
+                    <div class="pay-name">VIP MEMBER</div>
                 </div>
             </div>
         </section>
 
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <div class="num-bg">01</div>
-                    <h2>Завжди поруч</h2>
-                    <p>Ми працюємо без посередників, щоб ви отримували найкраще за чесну ціну.</p>
-                </div>
+        <section class="screen">
+            <div class="card">
+                <div class="num">03</div>
+                <h2>Твоя кар'єра</h2>
+                <p>Шукаємо амбітних людей у нашу команду. Розвивайся разом з лідерами.</p>
+                <button class="action-btn black">Дивитись вакансії</button>
             </div>
         </section>
 
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card yellow-card">
-                    <div class="num-bg">02</div>
-                    <h2>Лояльність</h2>
-                    <p>Кешбек 1% з кожної покупки. Накопичуйте бали та витрачайте їх на смаколики.</p>
-                    <div class="virtual-card"><div class="chip"></div><div class="card-brand">TANO</div></div>
-                </div>
+        <section class="screen">
+            <div class="card">
+                <div class="num">04</div>
+                <h2>Бізнес-клуб</h2>
+                <p>Ми відкриті до нових локацій та надійних постачальників продукції.</p>
+                <button class="action-btn outline">Залишити запит</button>
             </div>
         </section>
 
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card">
-                    <div class="num-bg">03</div>
-                    <h2>Кар'єра</h2>
-                    <p>Ставай частиною великої команди. Ми пропонуємо стабільність та розвиток.</p>
-                    <button class="wow-btn-outline">ВАКАНСІЇ</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card white-card">
-                    <div class="num-bg">04</div>
-                    <h2>Співпраця</h2>
-                    <p>Запрошуємо партнерів та постачальників до взаємовигідної роботи.</p>
-                    <button class="wow-btn-dark">ПАРТНЕРАМ</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="content-wrapper">
-                <div class="glass-card contact-card">
-                    <div class="step-label">ЗВ'ЯЗОК</div>
-                    <h2>Контакти</h2>
-                    <div class="contact-grid">
-                        <a href="tel:+380983596480" class="contact-box">📞 +38 (098) 359 64 80</a>
-                        <div class="contact-box full">📍 м. Чернівці, вул. Руська 1а</div>
+        <section class="screen">
+            <div class="card contact-card">
+                <div class="tag">ЗВ'ЯЗОК</div>
+                <h2>Контакти</h2>
+                <div class="info-list">
+                    <a href="tel:+380983596480" class="info-row">
+                        <span class="icon">📞</span> +38 (098) 359 64 80
+                    </a>
+                    <div class="info-row">
+                        <span class="icon">📍</span> м. Чернівці, Руська 1а
                     </div>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
-    <script src="app.js?v=15"></script>
+    <script src="app.js?v=20"></script>
 </body>
 </html>
