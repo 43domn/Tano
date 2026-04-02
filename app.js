@@ -3,38 +3,35 @@ tg.expand();
 tg.ready();
 tg.setHeaderColor('#050505');
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// Оставляем только ScrollTrigger, плагин скролла больше не нужен
+gsap.registerPlugin(ScrollTrigger);
 
 const panels = gsap.utils.toArray(".panel");
 
-// 1. НАЛАШТУВАННЯ "БЕЗУПРЕЧНОГО" СКРОЛЛІНГУ
-// Ми створюємо один таймлайн, який керує "шарами"
+// 1. НАСТРОЙКА СКРОЛЛИНГА
 const mainTl = gsap.timeline({
     scrollTrigger: {
-        trigger: "body",
+        trigger: "#app-container", // ВАЖНО: теперь привязано к контейнеру, а не к body
         start: "top top",
-        end: "+=" + (panels.length * 100) + "%", // Висота залежить від к-сті блоків
-        scrub: 1, // М'якість скролла
-        pin: true, // Закріплення тіла (дуже важливо!)
-        snap: 1 / (panels.length - 1) // Авто-доводка до блоку
+        end: "+=" + (panels.length * 100) + "%",
+        scrub: 1,
+        pin: true,
+        snap: 1 / (panels.length - 1)
     }
 });
 
 panels.forEach((panel, i) => {
-    // Встановлюємо початковий стан для всіх панелей, крім першої
     if (i > 0) {
         gsap.set(panel, { position: "absolute", top: 0, left: 0, opacity: 0, scale: 0.8 });
     }
 
     if (i > 0) {
-        // Попередня секція плавно зникає та затемнюється
         mainTl.to(panels[i-1], { 
             opacity: 0, 
             scale: 0.8, 
             duration: 0.5,
             pointerEvents: 'none'
         }, i)
-        // Нова секція з'являється (нашаровується поверх)
         .to(panel, { 
             opacity: 1, 
             scale: 1, 
@@ -43,7 +40,7 @@ panels.forEach((panel, i) => {
     }
 });
 
-// 2. ЛОГІКА ОКНА МЕНЮ
+// 2. ЛОГИКА МЕНЮ
 const menuToggle = document.getElementById("menuToggle");
 const menuOverlay = document.getElementById("menuOverlay");
 const menuItems = document.querySelectorAll(".menu-item");
@@ -53,69 +50,31 @@ menuToggle.addEventListener("click", () => {
     if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 });
 
-// Плавний перехід по кліку на пункт меню
+// Навигация по клику
 menuItems.forEach((item) => {
     item.addEventListener("click", () => {
-        const index = item.getAttribute("data-index");
-        menuOverlay.classList.remove("active");
-
-        // Розраховуємо точну позицію для скролла в пікселях
-        // Оскільки ми використовуємо pinning, позиція = індекс * висота вьюпорту
-        const scrollDistance = index * window.innerHeight;
-
-        gsap.to(window, {
-            scrollTo: scrollDistance,
-            duration: 1.5,
-            ease: "power4.inOut"
-        });
-
-        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-    });
-});
-
-// Закриття меню при клику поза вікном
-menuOverlay.addEventListener("click", (e) => {
-    if (e.target === menuOverlay) menuOverlay.classList.remove("active");
-});
-// 2. ЛОГІКА ОКНА МЕНЮ
-const menuToggle = document.getElementById("menuToggle");
-const menuOverlay = document.getElementById("menuOverlay");
-const menuItems = document.querySelectorAll(".menu-item");
-
-menuToggle.addEventListener("click", () => {
-    menuOverlay.classList.toggle("active");
-    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-});
-
-// Плавний перехід по кліку на пункт меню
-menuItems.forEach((item) => {
-    item.addEventListener("click", () => {
-        // Обязательно переводим строку в число
         const index = parseInt(item.getAttribute("data-index"));
-        menuOverlay.classList.remove("active");
+        menuOverlay.classList.remove("active"); // Скрываем меню
 
-        // Берем наш главный таймлайн и спрашиваем у него координаты
-        const st = mainTl.scrollTrigger;
-        
-        // Высчитываем процент скролла (от 0 до 1)
-        const progress = index / (panels.length - 1);
-        
-        // Получаем точную позицию в пикселях для текущего экрана
-        const targetScroll = st.start + (st.end - st.start) * progress;
-
-        // Плавно едем именно туда
-        gsap.to(window, {
-            scrollTo: targetScroll,
-            duration: 1.5,
-            ease: "power4.inOut"
-        });
+        // Небольшая задержка, чтобы меню успело плавно исчезнуть без "фризов"
+        setTimeout(() => {
+            const st = mainTl.scrollTrigger;
+            
+            // Вычисляем точный пиксель для остановки
+            const targetY = st.start + (index * (st.end - st.start) / (panels.length - 1));
+            
+            // Нативный скролл устройства (работает в Telegram безотказно)
+            window.scrollTo({
+                top: targetY,
+                behavior: "smooth"
+            });
+        }, 150);
 
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
     });
 });
 
-// Закриття меню при клику поза вікном
+// Закрытие при клике по фону
 menuOverlay.addEventListener("click", (e) => {
     if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
-
