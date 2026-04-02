@@ -1,17 +1,15 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();
-tg.setHeaderColor('#050505');
 
-// Оставляем только ScrollTrigger, плагин скролла больше не нужен
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const panels = gsap.utils.toArray(".panel");
 
-// 1. НАСТРОЙКА СКРОЛЛИНГА
+// 1. СТВОРЕННЯ ТАЙМЛАЙНУ З МІТКАМИ
 const mainTl = gsap.timeline({
     scrollTrigger: {
-        trigger: "#app-container", // ВАЖНО: теперь привязано к контейнеру, а не к body
+        trigger: "#app-container",
         start: "top top",
         end: "+=" + (panels.length * 100) + "%",
         scrub: 1,
@@ -21,11 +19,12 @@ const mainTl = gsap.timeline({
 });
 
 panels.forEach((panel, i) => {
-    if (i > 0) {
-        gsap.set(panel, { position: "absolute", top: 0, left: 0, opacity: 0, scale: 0.8 });
-    }
+    // Додаємо мітку для кожної панелі (потрібно для телепортації)
+    mainTl.addLabel("panel_" + i, i);
 
     if (i > 0) {
+        gsap.set(panel, { position: "absolute", top: 0, left: 0, opacity: 0, scale: 0.9 });
+        
         mainTl.to(panels[i-1], { 
             opacity: 0, 
             scale: 0.8, 
@@ -40,7 +39,7 @@ panels.forEach((panel, i) => {
     }
 });
 
-// 2. ЛОГИКА МЕНЮ
+// 2. ЛОГІКА МЕНЮ (ТЕЛЕПОРТАЦІЯ)
 const menuToggle = document.getElementById("menuToggle");
 const menuOverlay = document.getElementById("menuOverlay");
 const menuItems = document.querySelectorAll(".menu-item");
@@ -50,31 +49,26 @@ menuToggle.addEventListener("click", () => {
     if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
 });
 
-// Навигация по клику
 menuItems.forEach((item) => {
     item.addEventListener("click", () => {
-        const index = parseInt(item.getAttribute("data-index"));
-        menuOverlay.classList.remove("active"); // Скрываем меню
+        const index = item.getAttribute("data-index");
+        menuOverlay.classList.remove("active");
 
-        // Небольшая задержка, чтобы меню успело плавно исчезнуть без "фризов"
-        setTimeout(() => {
-            const st = mainTl.scrollTrigger;
-            
-            // Вычисляем точный пиксель для остановки
-            const targetY = st.start + (index * (st.end - st.start) / (panels.length - 1));
-            
-            // Нативный скролл устройства (работает в Telegram безотказно)
-            window.scrollTo({
-                top: targetY,
-                behavior: "smooth"
-            });
-        }, 150);
+        // Отримуємо координати мітки в пікселях скролу
+        const scrollPos = mainTl.scrollTrigger.labelToScroll("panel_" + index);
+
+        // Плавна телепортація
+        gsap.to(window, {
+            scrollTo: scrollPos,
+            duration: 1.2,
+            ease: "power3.inOut"
+        });
 
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
     });
 });
 
-// Закрытие при клике по фону
+// Закриття при кліку на фон
 menuOverlay.addEventListener("click", (e) => {
     if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
