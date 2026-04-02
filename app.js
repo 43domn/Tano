@@ -2,50 +2,36 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 tg.ready();
 
-// Налаштування теми Telegram (світла)
+// Налаштування теми Telegram
 tg.setHeaderColor('#F5F5F7');
 tg.setBackgroundColor('#F5F5F7');
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// Реєструємо тільки плагін для плавного скролу до точки
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
-const screens = gsap.utils.toArray(".screen");
+const screens = document.querySelectorAll(".screen");
 
-// 1. ПРЕМІАЛЬНИЙ СКРОЛЛ-ТАЙМЛАЙН
-const mainTl = gsap.timeline({
-    scrollTrigger: {
-        trigger: "#smooth-wrapper",
-        start: "top top",
-        end: "+=" + (screens.length * 100) + "%",
-        scrub: 1.2, // Трохи повільніше для відчуття "ваги"
-        pin: true,
-        snap: 1 / (screens.length - 1)
-    }
-});
-
+// 1. НАЛАШТУВАННЯ ФІЗИЧНИХ ШАРІВ (Ідеальна точність)
 screens.forEach((screen, i) => {
-    mainTl.addLabel("pos_" + i, i);
+    // Встановлюємо жорсткий z-index, щоб при скролі блоки правильно накривали один одного
+    screen.style.zIndex = i + 1;
 
+    // Додаємо легку анімацію появи контенту всередині блоку
     if (i > 0) {
-        // Початковий стан для наступних екранів (вони знизу і прозорі)
-        gsap.set(screen, { position: "absolute", top: 0, left: 0, opacity: 0, y: 100 });
-        
-        mainTl.to(screens[i-1], { 
-            opacity: 0, 
-            y: -50,
-            scale: 0.9,
-            duration: 0.5,
-            pointerEvents: 'none'
-        }, i)
-        .to(screen, { 
-            opacity: 1, 
-            y: 0,
-            scale: 1,
-            duration: 0.5 
-        }, i);
+        gsap.from(screen.querySelector('.card'), {
+            scrollTrigger: {
+                trigger: screen,
+                start: "top 80%", // Спрацьовує, коли блок з'являється на екрані
+            },
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out"
+        });
     }
 });
 
-// 2. МЕНЮ ТА ТЕЛЕПОРТАЦІЯ
+// 2. ЛОГІКА МЕНЮ ТА ЖОРСТКА ТЕЛЕПОРТАЦІЯ
 const menuToggle = document.getElementById("menuToggle");
 const menuOverlay = document.getElementById("menuOverlay");
 const menuLinks = document.querySelectorAll(".link-item");
@@ -57,23 +43,24 @@ menuToggle.addEventListener("click", () => {
 
 menuLinks.forEach((link) => {
     link.addEventListener("click", () => {
-        const idx = link.getAttribute("data-index");
+        const idx = parseInt(link.getAttribute("data-index"));
         menuOverlay.classList.remove("active");
 
-        // Ідеальний розрахунок точки скролу
-        const scrollPos = mainTl.scrollTrigger.labelToScroll("pos_" + idx);
+        // Ідеально точна формула телепортації:
+        // індекс кнопки * фізична висота вікна пристрою
+        const exactScrollPosition = idx * window.innerHeight;
 
         gsap.to(window, {
-            scrollTo: scrollPos,
-            duration: 1.5,
-            ease: "expo.inOut" // Преміальне сповільнення в кінці
+            scrollTo: exactScrollPosition,
+            duration: 1.2,
+            ease: "power3.inOut"
         });
 
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
     });
 });
 
-// Закриття при кліку на фон (blur)
+// Закриття меню при кліку на розмитий фон
 menuOverlay.addEventListener("click", (e) => {
     if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
