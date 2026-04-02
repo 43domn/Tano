@@ -77,3 +77,45 @@ menuItems.forEach((item) => {
 menuOverlay.addEventListener("click", (e) => {
     if (e.target === menuOverlay) menuOverlay.classList.remove("active");
 });
+// 2. ЛОГІКА ОКНА МЕНЮ
+const menuToggle = document.getElementById("menuToggle");
+const menuOverlay = document.getElementById("menuOverlay");
+const menuItems = document.querySelectorAll(".menu-item");
+
+menuToggle.addEventListener("click", () => {
+    menuOverlay.classList.toggle("active");
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+});
+
+// Плавний перехід по кліку на пункт меню
+menuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        // Обязательно переводим строку в число
+        const index = parseInt(item.getAttribute("data-index"));
+        menuOverlay.classList.remove("active");
+
+        // Берем наш главный таймлайн и спрашиваем у него координаты
+        const st = mainTl.scrollTrigger;
+        
+        // Высчитываем процент скролла (от 0 до 1)
+        const progress = index / (panels.length - 1);
+        
+        // Получаем точную позицию в пикселях для текущего экрана
+        const targetScroll = st.start + (st.end - st.start) * progress;
+
+        // Плавно едем именно туда
+        gsap.to(window, {
+            scrollTo: targetScroll,
+            duration: 1.5,
+            ease: "power4.inOut"
+        });
+
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    });
+});
+
+// Закриття меню при клику поза вікном
+menuOverlay.addEventListener("click", (e) => {
+    if (e.target === menuOverlay) menuOverlay.classList.remove("active");
+});
+
